@@ -4,9 +4,16 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
+
+    public function getDashboard()
+    {
+        return view('dashboard');
+    }
+
     public function postSignUp(Request $request)
     {
         $email = $request['email'];
@@ -19,13 +26,21 @@ class UserController extends Controller
         $user->password = $password;
         $user -> save();
 
-        return redirect()->back();
+        Auth::login($user);
+
+        return redirect()->route('dashboard');
+
+       // return redirect()->route('dashboard');
     }
 
     public function postSignIn(Request $request)
     {
-
+        if (Auth::attempt(['email' => $request['email'], 'password' => $request['password']])) { // importa s iluminate suport facades auth , imput je na emailu , drugi parametar passord kojem pristupam kroz passwprd key
+            return redirect()->route('dashboard'); // atempt pokusava log in usera s kridencijalima ako faila vraca false ako uspije dobije true
+        }  // ako uspuje vraca redirekt u route
+        return redirect()->route('dashboard'); // ako ne vraca u starting stream ako se ne uspije logirati
     }
+
 }
 /*
 namespace app\Http\Controllers;

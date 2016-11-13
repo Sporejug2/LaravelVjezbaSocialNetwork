@@ -67,8 +67,8 @@ return [
 
     'providers' => [
         'users' => [
-            'driver' => 'eloquent',
-            'model' => App\User::class, // app user model  // model class ide na app\user:class
+            'driver' => 'eloquent', // driver koji koristimo , laravel overem iza modela koji koristimo
+            'model' => App\User::class, // app user model za autentifikaciju , helper za autentifikaciju // model class ide na app\user:class
         ],
 
         // 'users' => [

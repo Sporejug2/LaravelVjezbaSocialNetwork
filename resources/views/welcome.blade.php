@@ -26,17 +26,17 @@
        </div>
        <div class="col-md-6"> <!-- jer imamo 12 boja grid u bootstrap , md medium size svi uređaji će prepoznati kao 2 sign in -->
            <h3>Sign In</h3>
-           <form action="#" method="post">
+           <form action="{{ route('signin') }}" method="post">
                <div class="form-group">
                    <label for="email"> Tvoj E-mail </label>   <!-- form gup brine se za aligment -->
                    <input class="form-control" type="text" name="email" id="email"> <!-- kontrola od bootstrapa -->
                </div>
                <div class="form-group">
-                   <label for="password"> Tvoje ime </label>   <!-- form gup brine se za aligment -->
+                   <label for="password"> Tvoj Password </label>   <!-- form gup brine se za aligment -->
                    <input class="form-control" type="password" name="password" id="password"> <!-- kontrola od bootstrapa -->
                </div>
                <button type="submit" class="btn btn-primary">Submit</button>
-              <!--// token u log in formu , slucaj za svaku formu ako ne uspijemo tokken mismatch -->
+               <input type="hidden" name="_token" value="{{ Session::token() }}">  <!--// token u log in formu , slucaj za svaku formu ako ne uspijemo tokken mismatch -->
            </form>
        </div>
    </div>

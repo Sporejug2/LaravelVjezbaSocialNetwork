@@ -25,6 +25,18 @@ Route::group(['middleware' => ['web']], function () {
         'uses' => 'UserController@postSignUp',// signup ce pisati u url , dajemo mu array funkcija koja se pokrece kada kliknemo request sign up
         'as' => 'signup'
     ]);
-});
+
+    Route::post('/signin', [
+            'uses' => 'UserController@postSignIn',
+            'as' => 'signin'
+        ]);
+
+        Route::get('/dashboard', [// ruta dohvacanje get dashboard
+            'uses' => 'UserController@getDashboard',// user kontrola funkcija
+            'as' => 'dashboard' // ime as dashboard
+        ]);
+    });
+
+
 
 
