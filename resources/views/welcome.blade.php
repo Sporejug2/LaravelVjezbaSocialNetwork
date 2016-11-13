@@ -4,21 +4,33 @@
     @endsection
 
 @section('content') <!-- insertam ovo u sekciju content-->
+    @if(count($errors) > 0) <!-- za traženje grešaka unutar forme-->
    <div class="row">
-       <div class="col-md-6"> <!-- jer imamo 12 boja grid u bootstrap  -->
+       <div class="col-md-4 col-md-offset-4"> <!-- jer imamo 12 boja grid u bootstrap  -->
+           <ul>
+               @foreach($errors->all() as $error)
+                   <li>{{$error}}
+                   </li>
+                   @endforeach
+                </ul>
+           </div>
+       </div>
+   @endif
+    <div class="row">
+        <div class="col-md-6">
            <h3>Sign Up</h3>
             <form action="{{ route('signup') }}" method="post">
-                <div class="form-group">
+                <div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
                     <label for="email"> Tvoj E-mail </label>   <!-- form gup brine se za aligment -->
-                     <input class="form-control" type="text" name="email" id="email"> <!-- kontrola od bootstrapa -->
+                     <input class="form-control " type="text" name="email" id="email" value="{{ Request::old('email') }}"> <!-- kontrola od bootstrapa , hass error class u bootstrapu -->
                  </div>
-                <div class="form-group">
+                <div class="form-group {{ $errors->has('first_name') ? 'has-error' : '' }}  ">
                     <label for="first_name"> Tvoje ime </label>   <!-- form gup brine se za aligment -->
-                    <input class="form-control" type="text" name="first_name" id="first_name"> <!-- kontrola od bootstrapa -->
+                    <input class="form-control" type="text" name="first_name" id="first_name" value="{{ Request::old('first_name') }}"> <!-- kontrola od bootstrapa -->
                 </div>
-                <div class="form-group">
+                <div class="form-group {{ $errors->has('password') ? 'has-error' : '' }}">
                     <label for="password"> Tvoj Password </label>   <!-- form gup brine se za aligment -->
-                    <input class="form-control" type="password" name="password" id="password"> <!-- kontrola od bootstrapa -->
+                    <input class="form-control" type="password" name="password" id="password" value="{{ Request::old('password') }}"> <!-- kontrola od bootstrapa -->
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
                  <input type="hidden" name="_token" value="{{ Session::token() }}"> <!-- Session pristup helper funkciji , dohvaća token i stora ga u field i šalje kao request , automatski radi laravel zaštita xss -->
@@ -27,13 +39,13 @@
        <div class="col-md-6"> <!-- jer imamo 12 boja grid u bootstrap , md medium size svi uređaji će prepoznati kao 2 sign in -->
            <h3>Sign In</h3>
            <form action="{{ route('signin') }}" method="post">
-               <div class="form-group">
+               <div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
                    <label for="email"> Tvoj E-mail </label>   <!-- form gup brine se za aligment -->
-                   <input class="form-control" type="text" name="email" id="email"> <!-- kontrola od bootstrapa -->
+                   <input class="form-control" type="text" name="email" id="email" value="{{ Request::old('email') }}" > <!-- kontrola od bootstrapa , request old kako bi ostao password-->
                </div>
-               <div class="form-group">
+               <div class="form-group {{ $errors->has('password') ? 'has-error' : '' }}">
                    <label for="password"> Tvoj Password </label>   <!-- form gup brine se za aligment -->
-                   <input class="form-control" type="password" name="password" id="password"> <!-- kontrola od bootstrapa -->
+                   <input class="form-control" type="password" name="password" id="password" value="{{ Request::old('password') }}"> <!-- kontrola od bootstrapa -->
                </div>
                <button type="submit" class="btn btn-primary">Submit</button>
                <input type="hidden" name="_token" value="{{ Session::token() }}">  <!--// token u log in formu , slucaj za svaku formu ako ne uspijemo tokken mismatch -->
