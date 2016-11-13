@@ -14,6 +14,9 @@ class User extends Model implements Authenticatable  // implementira autentifika
     // user table se spaja na user da se spaja na user 2 morali bi staviti user 2 ili protected
     // implementirati autentifikaciju  , jednostavno autentifikaciju da ne moram rucno provjeriti autentifikaciju
     // funkcija za autentifikaciju , kontrakt gore i ovaj trade
-
+        public function posts()
+        {
+            return $this->hasMany('App\Post');
+        }
 
 }
