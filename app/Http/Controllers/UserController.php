@@ -3,16 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
 
-    public function getDashboard()
-    {
-        return view('dashboard');
-    }
+
 
     public function postSignUp(Request $request)
     {
@@ -53,6 +53,41 @@ class UserController extends Controller
             return redirect()->route('dashboard'); // atempt pokusava log in usera s kridencijalima ako faila vraca false ako uspije dobije true
         }  // ako uspuje vraca redirekt u route
         return redirect()->back(); // ako ne vraca u starting stream ako se ne uspije logirati
+    }
+
+    public function getLogout()
+    {
+        Auth::logout();
+        return redirect()->route('home');
+    }
+
+    public function getAccount()
+    {
+        return view('account', ['user' => Auth::user()]); //vraca view account view i proslijedjujemo mu usera , trenutno log in usera
+    }
+
+    public function postSaveAccount(Request $request)
+    {
+        $this->validate($request , [
+            'first_name' => 'required|max:120'
+        ]);// validacija metode koju primamo s forme , definiram pravila
+
+        $user = Auth::user(); // vracam trenutnog usere
+        $user -> first_name = $request['first_name']; // setam frist name i proslijedjujem mu funkciju kroz request
+        $user->update(); // spremam ondosnu updateam usera
+        $file = $request->file('image'); // dohvacam file kroz request zovem file metodu i specificiram ime filea
+        $filename = $request['first_name'] . '-' . $user->id . '.jpg';  //setam file name , ime usera , razmak , id usera , ekstenzija samo jpeg
+        if($file){
+            Storage::disk('local')->put($filename, File::get($file)); // helper koji dopusta laravel storage enguine , sprema file na file sistem tj na server , moze pristupiti setingu i storati lako file
+        //file u koji file da stavi koristi file , facades , dohvati file , sprema trenutni file
+        }
+        return redirect()->route('account');
+    }
+
+    public function getUserImage($filename)
+    {
+        $file = Storage::disk('local')->get($filename);
+        return new Response($file, 200);
     }
 
 }

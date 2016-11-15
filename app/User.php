@@ -19,4 +19,10 @@ class User extends Model implements Authenticatable  // implementira autentifika
             return $this->hasMany('App\Post');
         }
 
+    public function likes()
+    {
+        // post moze imati vise likeova
+        return $this->hasMany('App\Like');
+    }
+
 }

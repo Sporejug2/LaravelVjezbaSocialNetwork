@@ -12,5 +12,12 @@ class Post extends Model
     {
         return $this-> belongsTo('App\User');// vraća query , ovraca ovo i opisuje relaciju , pripada useru, string je arugemt
         // relacija izmedju postova post pripada useru
+
+    }
+
+    public function likes()
+    {
+        // post moze imati vise likeova
+        return $this->hasMany('App\Like');
     }
 }
