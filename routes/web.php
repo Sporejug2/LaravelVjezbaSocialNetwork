@@ -19,7 +19,7 @@
 Route::group(['middleware' => ['web']], function () {
     Route::get('/', function () {
         return view('welcome');
-    })->name('home');;
+    })->name('home');
 
     Route::post('/signup', [
         'uses' => 'UserController@postSignUp',// signup ce pisati u url , dajemo mu array funkcija koja se pokrece kada kliknemo request sign up
@@ -39,6 +39,8 @@ Route::group(['middleware' => ['web']], function () {
        'uses' => 'UserController@getAccount',
         'as' => 'account'
     ]);
+
+
 
     Route::post('/upateaccount', [
         'uses' => 'UserController@postSaveAccount',
@@ -68,10 +70,17 @@ Route::group(['middleware' => ['web']], function () {
         'middleware' => 'auth'
     ]);
 
-    Route::post('\edit' , [
-       'uses' => 'PostController@postEditPost',
+    Route::post('/edit' , [
+      'uses' => 'PostController@postEditPost',
         'as' => 'edit'
+        ]);
+
+    Route::post('/like', [
+        'uses' => 'PostController@postLikePost',
+        'as' => 'like'
     ]);
+        /////////////////////////////////
+
     });
 
 

@@ -5,7 +5,6 @@
 @endsection
 
 @section('content')
-
     <section class="row new-post">
         <div class="col-md-6 col-md-offset-3">
             <header><h3>Your Account</h3></header>
@@ -22,12 +21,23 @@
                 <input type="hidden" value="{{ Session::token() }}" name="_token">
             </form>
         </div>
+        ///////////////////
     </section>
     @if (Storage::disk('local')->has($user->first_name . '-' . $user->id . '.jpg')) <!-- pronalazime provjeravamo file kroz has metodu  -->
-        <section class="row new-post">
-            <div class="col-md-6 col-md-offset-3">
-                <img src="{{ route('account.image', ['filename' => $user->first_name . '-' . $user->id . '.jpg']) }}" alt="" class="img-responsive">
-            </div>
-        </section>
+    <section class="row new-post">
+        <div class="col-md-6 col-md-offset-3">
+            <img src="{{ route('account.image', ['filename' => $user->first_name . '-' . $user->id . '.jpg']) }}" alt="" class="img-responsive">
+        </div>
+    </section>
+    @endif
+
+    @if (Storage::disk('local')->has('.jpg')) <!-- pronalazime provjeravamo file kroz has metodu  -->
+    <section class="row new-post">
+        <div class="col-md-6 col-md-offset-3">
+            <img src="{{ route('account.image', ['filename' => $user->first_name . '-' . $user->id . '.jpg']) }}" alt="" class="img-responsive">
+            <img src="{{ route('account.image', ['filename' => $user->first_name . '-' . $user->id . '.jpg']) }}" alt="" class="img-responsive">
+            <img src="{{ route('account.image', ['filename' => $user->first_name . '-' . $user->id . '.jpg']) }}" alt="" class="img-responsive">
+        </div>
+    </section>
     @endif
 @endsection

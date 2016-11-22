@@ -29,8 +29,8 @@ class UserController extends Controller
 
         $user = new User(); // nova instanca user objekta
         $user ->email = $email;
-        $user -> first_name = $first_name;
-        $user->password = $password;
+        $user ->first_name = $first_name;
+        $user ->password = $password;
         $user -> save();
 
         Auth::login($user);
@@ -89,6 +89,9 @@ class UserController extends Controller
         $file = Storage::disk('local')->get($filename);
         return new Response($file, 200);
     }
+    /////////////////////////////////////////////////
+
+
 
 }
 /*
@@ -113,7 +116,10 @@ use Illuminate\Support\Facades\Auth;
         Auth::login($user);
 
         return redirect() -> route('dashboard'); // redirekta nazad na view
-        // ZA KREIRATI TABLICU php artisan migrate
+        // ZA KREIRATI TABLICU
+
+php artisan migrate
+ php artisan make:model Like
     }
 
 
